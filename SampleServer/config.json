@@ -1,0 +1,27 @@
+﻿{
+	"Servers": {
+		"mediator": {
+			"Type": 0,
+			"IpAddress": "127.0.0.1",
+			"Port": 8080
+		},
+		"compute1": {
+			"Type": 1,
+			"IpAddress": "127.0.0.1",
+			"Port": 8081,
+			"PoolSize": 2
+		},
+		"compute2": {
+			"Type": 1,
+			"IpAddress": "127.0.0.1",
+			"Port": 8082,
+			"PoolSize": 2
+		},
+		"compute3": {
+			"Type": 1,
+			"IpAddress": "127.0.0.1",
+			"Port": 8083,
+			"PoolSize": 2
+		}
+	}
+}

@@ -23,6 +23,7 @@ using Dispartior.Algorithms;
 using Dispartior.Messaging.Messages.Commands;
 using Dispartior.Configuration;
 using Dispartior.Servers;
+using Dispartior.Data;
 
 namespace SampleServer
 {
@@ -40,13 +41,16 @@ namespace SampleServer
             var configLoader = new ConfigurationLoader(DefaultConfigFilename);
             var systemConfig = configLoader.LoadConfiguration();
 
-            var algoFactory = new AlgorithmFactory();
+			var dataSourceFactory = new DataSourceFactory();
+
+			var algoFactory = new AlgorithmFactory(dataSourceFactory);
             algoFactory.RegisterAlgorithm<AlgoOne>();
 
-			var serverFactory = new ServerFactory(systemConfig, algoFactory);
+			var serverFactory = new ServerFactory(systemConfig, algoFactory, dataSourceFactory);
 
             var server = serverFactory.CreateServer(serverName);
             server.Start();
         }
+
     }
 }

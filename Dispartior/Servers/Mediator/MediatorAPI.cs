@@ -13,8 +13,6 @@ namespace Dispartior.Servers.Mediator
 
 		public MediatorAPI(Controller controller)
         {
-			Console.WriteLine("Doing mediator");
-
 			this.controller = controller;
 
 			Post["/computationStart"] = _ =>

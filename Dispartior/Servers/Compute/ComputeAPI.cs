@@ -6,6 +6,7 @@ using Dispartior.Messaging.Messages.Commands;
 using Dispartior.Messaging.Messages.Requests;
 using Dispartior.Messaging.Messages.Responses;
 using Dispartior.Messaging.Messages;
+using Dispartior.Data;
 
 namespace Dispartior.Servers.Compute
 {
@@ -14,12 +15,7 @@ namespace Dispartior.Servers.Compute
 		private readonly WorkerPool workerPool;
 		private readonly AlgorithmFactory algorithmFactory;
 
-		public ComputeAPI()
-		{
-			Console.WriteLine("Doing Compute");
-		}
-
-		public ComputeAPI(WorkerPool workerPool, AlgorithmFactory algorithmFactory) 
+		public ComputeAPI(WorkerPool workerPool, AlgorithmFactory algorithmFactory)
         {
 			this.workerPool = workerPool;
 			this.algorithmFactory = algorithmFactory;
@@ -28,17 +24,14 @@ namespace Dispartior.Servers.Compute
 	            {
 					Console.WriteLine("doing computation task...");
 					var computation = DeserializeBody<Computation>();
-					var workerId = computation.Worker;
-					var algoName = computation.Algorithm;
-					var algorithm = algorithmFactory.CreateAlgorithm(algoName);
-					workerPool.AssignToWorker(algorithm, workerId);
+					StartComputation(computation);
 	                return HttpStatusCode.OK;
 	            };
 
             Post["/heartbeat"] = _ =>
 	            {
 					var heartbeat = DeserializeBody<Heartbeat>();
-	                Console.WriteLine("Got heartbeat: " + heartbeat.Serialize());
+	                Console.WriteLine("Got heartbeat.");
 	                var status = RespondToHeartbeat(heartbeat);
 	                return status.Serialize();
 	            };
@@ -56,6 +49,16 @@ namespace Dispartior.Servers.Compute
             status.UUID = heartbeat.UUID;
             return status;
         }
+
+		public void StartComputation(Computation computation)
+		{
+			var workerId = computation.Worker;
+			var algoName = computation.Algorithm;
+			var dataSourceConfig = computation.DataSourceConfiguration;
+			var algorithm = algorithmFactory.CreateAlgorithm(algoName);
+			algorithm.DataSourceConfiguration = dataSourceConfig;
+			workerPool.AssignToWorker(algorithm, workerId);
+		}
 
 		public T DeserializeBody<T>()
 		{

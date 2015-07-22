@@ -8,6 +8,7 @@ using Dispartior.Configuration;
 using Dispartior.Servers.Compute;
 using Dispartior.Algorithms;
 using Dispartior.Servers.Mediator;
+using Dispartior.Data;
 
 namespace Dispartior.Servers
 {

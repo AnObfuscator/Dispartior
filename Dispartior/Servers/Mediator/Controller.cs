@@ -6,6 +6,7 @@ using Dispartior.Utilities;
 using Dispartior.Messaging.Messages.Responses;
 using Dispartior.Messaging.Messages.Requests;
 using Dispartior.Messaging.Messages;
+using Dispartior.Data;
 
 namespace Dispartior.Servers.Mediator
 {
@@ -22,21 +23,29 @@ namespace Dispartior.Servers.Mediator
 
 		private readonly Queue<Computation> todo;
 
-		public Controller()
+		private readonly DataSourceFactory dataSourceFactory;
+
+		public Controller(DataSourceFactory dataSourceFactory)
 		{
 			todo = new Queue<Computation>();
 			computeNodes = new List<ComputeConnector>();
+			this.dataSourceFactory = dataSourceFactory;
 		}
 
 		public void StartComputation(Computation computation)
 		{
 			lock (controllerLock)
 			{
+				Console.WriteLine("Computation: " + computation.Serialize());
 				currentComputation = computation;
-				for (int i = 0; i < computation.PartitionSize; i++)
+				var dataSourceConfig = computation.DataSourceConfiguration;
+				var partitioner = dataSourceFactory.GetDataPartitioner(dataSourceConfig);
+				var partitions = partitioner.Partition(dataSourceConfig, computation.PartitionSize);
+				foreach (var dataPartition in partitions)
 				{
 					var computationPartition = new Computation();
 					computationPartition.Algorithm = computation.Algorithm;
+					computationPartition.DataSourceConfiguration = dataPartition;
 					todo.Enqueue(computationPartition);
 				}
 				computationInProgress = true;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Nancy.Hosting.Self;
 using Nancy;
 using Dispartior.Configuration;
+using Dispartior.Data;
 
 namespace Dispartior.Servers.Mediator
 {
@@ -14,10 +15,10 @@ namespace Dispartior.Servers.Mediator
 		private readonly Controller controller;
 		private readonly DefaultNancyBootstrapper bootstrapper;
 
-        public MediatorServer(SystemConfiguration systemConfig)
+        public MediatorServer(SystemConfiguration systemConfig, DataSourceFactory dataSourceFactory)
         {
             config = systemConfig.Servers.First(kvp => kvp.Value.Type == ServerTypes.Mediator).Value;
-			controller = new Controller();
+			controller = new Controller(dataSourceFactory);
 //			bootstrapper = new MediatorBootstrapper(controller);
 			bootstrapper = new ApiBootstrapper(controller);
         }

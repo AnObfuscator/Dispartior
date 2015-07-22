@@ -4,11 +4,13 @@ using Dispartior.Data;
 
 namespace SampleServer.Algorithms
 {
-    public class AlgoOne : IAlgorithm
+	public class AlgoOne : IAlgorithm
 	{
 		public IAlgorithmRunner AlgorithmRunner { get; set; }
 
-		public IDataSource<int> DataSource { get; set; } 
+		public IDataSourceConfiguration DataSourceConfiguration { get; set; }
+
+		public DataSourceFactory DataSourceFactory { get; set; }
 
         public AlgoOne()
         {
@@ -16,6 +18,7 @@ namespace SampleServer.Algorithms
 			
 		public void Run()
 		{
+			DataSourceFactory.GetDataSource<int>(DataSourceConfiguration);
 //			while (DataSource.HasNext())
 //			{
 //				var data = DataSource.GetNext();

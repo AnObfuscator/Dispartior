@@ -7,6 +7,7 @@ using Dispartior.Configuration;
 using Dispartior.Servers.Common;
 using Dispartior.Algorithms;
 using Dispartior.Messaging.Messages.Commands;
+using Dispartior.Data;
 
 namespace Dispartior.Servers.Compute
 {

@@ -10,7 +10,7 @@ namespace Dispartior.Data.Range
 
 		private int next;
 
-		public RangeDataSource(Range range)
+		public RangeDataSource(RangeConfiguration range)
 		{
 			start = range.Start;
 			end = range.End;
@@ -27,7 +27,7 @@ namespace Dispartior.Data.Range
 		public int GetNext()
 		{
 			var toReturn = next;
-			next++;
+			next += stepSize;
 			return toReturn;
 		}
 

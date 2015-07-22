@@ -3,6 +3,7 @@ using Dispartior.Configuration;
 using Dispartior.Algorithms;
 using Dispartior.Servers.Mediator;
 using Dispartior.Servers.Compute;
+using Dispartior.Data;
 
 namespace Dispartior.Servers
 {
@@ -12,10 +13,13 @@ namespace Dispartior.Servers
 
 		public AlgorithmFactory AlgorithmFactory { get; private set; }
 
-        public ServerFactory(SystemConfiguration configuration, AlgorithmFactory algoFactory)
+		public DataSourceFactory DataSourceFactory { get; private set; }
+
+		public ServerFactory(SystemConfiguration configuration, AlgorithmFactory algoFactory, DataSourceFactory dataSourceFactory)
         {
             SystemConfig = configuration;
 			AlgorithmFactory = algoFactory;
+			DataSourceFactory = dataSourceFactory;
         }
 
         public IServer CreateServer(string serverName)
@@ -25,7 +29,7 @@ namespace Dispartior.Servers
 
             if (serverConfig.Type == ServerTypes.Mediator)
             {
-                server = new MediatorServer(SystemConfig);
+				server = new MediatorServer(SystemConfig, DataSourceFactory);
             }
             else if (serverConfig.Type == ServerTypes.Compute) 
             {

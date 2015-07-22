@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Dispartior.Servers.Common;
 using Dispartior.Messaging.Messages.Responses;
 using Dispartior.Algorithms;
+using Dispartior.Data;
 
 namespace Dispartior.Servers.Compute
 {
@@ -12,6 +13,7 @@ namespace Dispartior.Servers.Compute
 		private readonly ConcurrentDictionary<string, Worker> workers; 
 		private readonly MediatorConnector mediator;
 		private readonly string nodeId;
+		private readonly DataSourceFactory dataSourceFactory;
 
 		public IDictionary<string, WorkerStatus> Status
 		{
@@ -30,6 +32,8 @@ namespace Dispartior.Servers.Compute
 		{
 			this.nodeId = nodeId;
 			this.mediator = mediator;
+			this.dataSourceFactory = dataSourceFactory;
+
 			workers = new ConcurrentDictionary<string, Worker>();
 			for (int i = 0; i < poolSize; i++)
 			{

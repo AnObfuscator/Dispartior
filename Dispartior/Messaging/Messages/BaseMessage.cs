@@ -5,6 +5,8 @@ namespace Dispartior.Messaging.Messages
 {
     public abstract class BaseMessage
     {
+		private static readonly DataSourceConfigurationJsonConverter dataSourceConfigConverter = new DataSourceConfigurationJsonConverter();
+
         public virtual string Serialize()
         {
             return JsonConvert.SerializeObject(this);
@@ -17,7 +19,9 @@ namespace Dispartior.Messaging.Messages
 
         public static T Deserialize<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json);
+			var settings = new JsonSerializerSettings();
+			settings.Converters.Add(dataSourceConfigConverter);
+            return JsonConvert.DeserializeObject<T>(json, settings);
         }
     }
 }

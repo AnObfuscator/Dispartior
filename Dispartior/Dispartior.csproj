@@ -78,10 +78,16 @@
     <Compile Include="Messaging\Messages\Commands\Register.cs" />
     <Compile Include="Messaging\Messages\Responses\ComputationResult.cs" />
     <Compile Include="Servers\Common\MediatorConnector.cs" />
-    <Compile Include="Data\Document\Document.cs" />
-    <Compile Include="Data\Range\Range.cs" />
     <Compile Include="Data\Range\RangeDataSource.cs" />
     <Compile Include="Data\IEntryDeserializer.cs" />
+    <Compile Include="Data\IDataSourceConfiguration.cs" />
+    <Compile Include="Data\Database\DatabaseConfiguration.cs" />
+    <Compile Include="Data\Range\RangeConfiguration.cs" />
+    <Compile Include="Data\Database\DatabaseDataSource.cs" />
+    <Compile Include="Messaging\DataSourceConfigurationJsonConverter.cs" />
+    <Compile Include="Data\IDataPartitioner.cs" />
+    <Compile Include="Data\Range\RangePartitioner.cs" />
+    <Compile Include="Data\Types\IntDeserializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -97,7 +103,8 @@
     <Folder Include="Utilities\" />
     <Folder Include="Data\" />
     <Folder Include="Data\Range\" />
-    <Folder Include="Data\Document\" />
+    <Folder Include="Data\Database\" />
+    <Folder Include="Data\Types\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -2,10 +2,10 @@
 
 namespace Dispartior.Messaging.Messages.Responses
 {
-	public enum RunnerStatus
-	{
-		Idle,
-		Running
-	}
+    public enum RunnerStatus
+    {
+        Idle,
+        Running
+    }
 }
 

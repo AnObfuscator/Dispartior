@@ -33,20 +33,20 @@ namespace SampleServer
 
         public static void Main(string[] args)
         {
-			var computation = new Computation { Algorithm = typeof(AlgoOne).ToString(), PartitionSize = 100 };
-			Console.WriteLine("Computation start body: "+computation.Serialize());
+            var computation = new Computation { Algorithm = typeof(AlgoOne).ToString(), PartitionSize = 100 };
+            Console.WriteLine("Computation start body: " + computation.Serialize());
 
             var serverName = args[0];
 
             var configLoader = new ConfigurationLoader(DefaultConfigFilename);
             var systemConfig = configLoader.LoadConfiguration();
 
-			var dataSourceFactory = new DataSourceFactory();
+            var dataSourceFactory = new DataSourceFactory();
 
-			var algoFactory = new AlgorithmFactory(dataSourceFactory);
+            var algoFactory = new AlgorithmFactory(dataSourceFactory);
             algoFactory.RegisterAlgorithm<AlgoOne>();
 
-			var serverFactory = new ServerFactory(systemConfig, algoFactory, dataSourceFactory);
+            var serverFactory = new ServerFactory(systemConfig, algoFactory, dataSourceFactory);
 
             var server = serverFactory.CreateServer(serverName);
             server.Start();

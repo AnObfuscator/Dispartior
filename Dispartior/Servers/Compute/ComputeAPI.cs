@@ -12,34 +12,34 @@ namespace Dispartior.Servers.Compute
 {
     public class ComputeAPI : NancyModule
     {
-		private readonly WorkerPool workerPool;
-		private readonly AlgorithmFactory algorithmFactory;
+        private readonly WorkerPool workerPool;
+        private readonly AlgorithmFactory algorithmFactory;
 
-		public ComputeAPI(WorkerPool workerPool, AlgorithmFactory algorithmFactory)
+        public ComputeAPI(WorkerPool workerPool, AlgorithmFactory algorithmFactory)
         {
-			this.workerPool = workerPool;
-			this.algorithmFactory = algorithmFactory;
+            this.workerPool = workerPool;
+            this.algorithmFactory = algorithmFactory;
 
             Post["/doComputation"] = _ =>
-	            {
-					Console.WriteLine("doing computation task...");
-					var computation = DeserializeBody<Computation>();
-					StartComputation(computation);
-	                return HttpStatusCode.OK;
-	            };
+            {
+                Console.WriteLine("doing computation task...");
+                var computation = DeserializeBody<Computation>();
+                StartComputation(computation);
+                return HttpStatusCode.OK;
+            };
 
             Post["/heartbeat"] = _ =>
-	            {
-					var heartbeat = DeserializeBody<Heartbeat>();
-	                Console.WriteLine("Got heartbeat.");
-	                var status = RespondToHeartbeat(heartbeat);
-	                return status.Serialize();
-	            };
+            {
+                var heartbeat = DeserializeBody<Heartbeat>();
+                Console.WriteLine("Got heartbeat.");
+                var status = RespondToHeartbeat(heartbeat);
+                return status.Serialize();
+            };
 
             Get["/status"] = _ =>
-	            {
-	                return HttpStatusCode.OK;
-	            };
+            {
+                return HttpStatusCode.OK;
+            };
         }
 
         public ComputeStatus RespondToHeartbeat(Heartbeat heartbeat)
@@ -50,22 +50,22 @@ namespace Dispartior.Servers.Compute
             return status;
         }
 
-		public void StartComputation(Computation computation)
-		{
-			var workerId = computation.Worker;
-			var algoName = computation.Algorithm;
-			var dataSourceConfig = computation.DataSourceConfiguration;
+        public void StartComputation(Computation computation)
+        {
+            var workerId = computation.Worker;
+            var algoName = computation.Algorithm;
+            var dataSourceConfig = computation.DataSourceConfiguration;
             Console.WriteLine("Starting computation: " + computation.Serialize());
-			var algorithm = algorithmFactory.CreateAlgorithm(algoName);
-			algorithm.DataSourceConfiguration = dataSourceConfig;
-			workerPool.AssignToWorker(algorithm, workerId);
-		}
+            var algorithm = algorithmFactory.CreateAlgorithm(algoName);
+            algorithm.DataSourceConfiguration = dataSourceConfig;
+            workerPool.AssignToWorker(algorithm, workerId);
+        }
 
-		public T DeserializeBody<T>()
-		{
-			var body = Request.Body.AsString();
-			return BaseMessage.Deserialize<T>(body);
-		}
+        public T DeserializeBody<T>()
+        {
+            var body = Request.Body.AsString();
+            return BaseMessage.Deserialize<T>(body);
+        }
     }
 }
 

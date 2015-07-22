@@ -5,22 +5,22 @@ namespace Dispartior.Messaging.Messages
 {
     public abstract class BaseMessage
     {
-		private static readonly DataSourceConfigurationJsonConverter dataSourceConfigConverter = new DataSourceConfigurationJsonConverter();
+        private static readonly DataSourceConfigurationJsonConverter dataSourceConfigConverter = new DataSourceConfigurationJsonConverter();
 
         public virtual string Serialize()
         {
             return JsonConvert.SerializeObject(this);
         }
 
-		public override string ToString()
-		{
-			return Serialize();
-		}
+        public override string ToString()
+        {
+            return Serialize();
+        }
 
         public static T Deserialize<T>(string json)
         {
-			var settings = new JsonSerializerSettings();
-			settings.Converters.Add(dataSourceConfigConverter);
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(dataSourceConfigConverter);
             return JsonConvert.DeserializeObject<T>(json, settings);
         }
     }

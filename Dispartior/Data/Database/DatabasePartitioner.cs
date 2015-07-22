@@ -9,7 +9,7 @@ namespace Dispartior.Data.Database
         {
             throw new NotImplementedException();
         }
-            
+
         public List<IDataSourceConfiguration> Partition(IDataSourceConfiguration dataSourceConfiguration, int partitionSize)
         {
             throw new NotImplementedException();

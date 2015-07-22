@@ -6,48 +6,49 @@ using Dispartior.Data;
 
 namespace Dispartior.Servers.Compute
 {
-	public class Worker : IAlgorithmRunner
+    public class Worker : IAlgorithmRunner
     {
-		private volatile RunnerStatus status = RunnerStatus.Idle;
-		public RunnerStatus Status 
-		{ 
-			get
-			{
-				return status;
-			}
-		}
+        private volatile RunnerStatus status = RunnerStatus.Idle;
 
-		public string Id { get; private set; }
-
-		private readonly WorkerPool workerPool;
-
-		public Worker(string id, WorkerPool workerPool)
-        {
-			Id = id;
-			this.workerPool = workerPool;
+        public RunnerStatus Status
+        { 
+            get
+            {
+                return status;
+            }
         }
 
-		public void Run(IAlgorithm algorithm)
-		{
-			status = RunnerStatus.Running;
-			algorithm.AlgorithmRunner = this;
+        public string Id { get; private set; }
 
-			new Thread(() =>
-				{
+        private readonly WorkerPool workerPool;
+
+        public Worker(string id, WorkerPool workerPool)
+        {
+            Id = id;
+            this.workerPool = workerPool;
+        }
+
+        public void Run(IAlgorithm algorithm)
+        {
+            status = RunnerStatus.Running;
+            algorithm.AlgorithmRunner = this;
+
+            new Thread(() =>
+                {
                     try
                     {
-					    Console.WriteLine("Worker thread running algorithm...");
-    					algorithm.Run();
-    					status = RunnerStatus.Idle;
-    					workerPool.FinishComputation(Id, true);
+                        Console.WriteLine("Worker thread running algorithm...");
+                        algorithm.Run();
+                        status = RunnerStatus.Idle;
+                        workerPool.FinishComputation(Id, true);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Error in thread running algorithm: " + ex.Message);
                         workerPool.FinishComputation(Id, false);
                     }
-				}).Start();
-		}
+                }).Start();
+        }
     }
 }
 

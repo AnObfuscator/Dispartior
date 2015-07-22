@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Dispartior.Servers
+﻿namespace Dispartior.Servers
 {
     public interface IServer
     {

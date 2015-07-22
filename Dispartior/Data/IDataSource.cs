@@ -2,11 +2,11 @@
 
 namespace Dispartior.Data
 {
-	public interface IDataSource<T>
-	{
-		bool HasNext();
+    public interface IDataSource<T>
+    {
+        bool HasNext();
 
-		T GetNext();
-	}
+        T GetNext();
+    }
 }
 

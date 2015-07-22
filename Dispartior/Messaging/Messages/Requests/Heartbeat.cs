@@ -12,10 +12,10 @@ namespace Dispartior.Messaging.Messages.Requests
         }
 
         public string UUID { get; set; }
-        
+
         DateTime TimeStamp { get; set; }
 
-        public HeartbeatStatus Status { get; set; } 
+        public HeartbeatStatus Status { get; set; }
 
         public static Heartbeat CreateNew()
         {

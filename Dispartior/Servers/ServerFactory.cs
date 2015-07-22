@@ -11,15 +11,15 @@ namespace Dispartior.Servers
     {
         public SystemConfiguration SystemConfig { get; private set; }
 
-		public AlgorithmFactory AlgorithmFactory { get; private set; }
+        public AlgorithmFactory AlgorithmFactory { get; private set; }
 
-		public DataSourceFactory DataSourceFactory { get; private set; }
+        public DataSourceFactory DataSourceFactory { get; private set; }
 
-		public ServerFactory(SystemConfiguration configuration, AlgorithmFactory algoFactory, DataSourceFactory dataSourceFactory)
+        public ServerFactory(SystemConfiguration configuration, AlgorithmFactory algoFactory, DataSourceFactory dataSourceFactory)
         {
             SystemConfig = configuration;
-			AlgorithmFactory = algoFactory;
-			DataSourceFactory = dataSourceFactory;
+            AlgorithmFactory = algoFactory;
+            DataSourceFactory = dataSourceFactory;
         }
 
         public IServer CreateServer(string serverName)
@@ -29,11 +29,11 @@ namespace Dispartior.Servers
 
             if (serverConfig.Type == ServerTypes.Mediator)
             {
-				server = new MediatorServer(SystemConfig, DataSourceFactory);
+                server = new MediatorServer(SystemConfig, DataSourceFactory);
             }
-            else if (serverConfig.Type == ServerTypes.Compute) 
+            else if (serverConfig.Type == ServerTypes.Compute)
             {
-				server = new ComputeServer(SystemConfig, serverName, AlgorithmFactory);
+                server = new ComputeServer(SystemConfig, serverName, AlgorithmFactory);
             }
 
             return server;

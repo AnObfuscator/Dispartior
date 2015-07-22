@@ -12,47 +12,47 @@ using Dispartior.Data;
 
 namespace Dispartior.Servers
 {
-	public class ApiBootstrapper : DefaultNancyBootstrapper
-	{
-		private readonly ServerTypes serverType;
+    public class ApiBootstrapper : DefaultNancyBootstrapper
+    {
+        private readonly ServerTypes serverType;
 
-		private readonly ComputeServer computeServer;
-		private readonly WorkerPool workerPool;
-		private readonly AlgorithmFactory algoFactory;
+        private readonly ComputeServer computeServer;
+        private readonly WorkerPool workerPool;
+        private readonly AlgorithmFactory algoFactory;
 
-		private readonly Controller controller;
+        private readonly Controller controller;
 
-		public ApiBootstrapper(Controller controller)
-		{
-			this.controller = controller;
-			serverType = ServerTypes.Mediator;
-		}
+        public ApiBootstrapper(Controller controller)
+        {
+            this.controller = controller;
+            serverType = ServerTypes.Mediator;
+        }
 
-		public ApiBootstrapper(ComputeServer computeServer, WorkerPool workerPool, AlgorithmFactory algoFactory)
-		{
-			this.computeServer = computeServer;
-			this.workerPool = workerPool;
-			this.algoFactory = algoFactory;
-			serverType = ServerTypes.Compute;
-		}
+        public ApiBootstrapper(ComputeServer computeServer, WorkerPool workerPool, AlgorithmFactory algoFactory)
+        {
+            this.computeServer = computeServer;
+            this.workerPool = workerPool;
+            this.algoFactory = algoFactory;
+            serverType = ServerTypes.Compute;
+        }
 
-		protected override void ConfigureApplicationContainer(TinyIoCContainer container)
-		{
+        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+        {
 //			if (serverType == ServerTypes.Compute)
 //			{
-				container.Register<ComputeAPI>();
-				container.Register(typeof(AlgorithmFactory), algoFactory);
-				container.Register(typeof(ComputeServer), computeServer);
-				container.Register(typeof(WorkerPool), workerPool);
+            container.Register<ComputeAPI>();
+            container.Register(typeof(AlgorithmFactory), algoFactory);
+            container.Register(typeof(ComputeServer), computeServer);
+            container.Register(typeof(WorkerPool), workerPool);
 //			}
 //			else if (serverType == ServerTypes.Mediator)
 //			{
-				container.Register<MediatorAPI>();
-				container.Register(typeof(Controller), controller);
+            container.Register<MediatorAPI>();
+            container.Register(typeof(Controller), controller);
 //			}
 
-		}
+        }
 
-	}
+    }
 }
 

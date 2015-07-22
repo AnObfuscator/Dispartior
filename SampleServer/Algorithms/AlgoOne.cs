@@ -5,31 +5,31 @@ using Dispartior.Data;
 
 namespace SampleServer.Algorithms
 {
-	public class AlgoOne : IAlgorithm
-	{
-		public IAlgorithmRunner AlgorithmRunner { get; set; }
+    public class AlgoOne : IAlgorithm
+    {
+        public IAlgorithmRunner AlgorithmRunner { get; set; }
 
-		public IDataSourceConfiguration DataSourceConfiguration { get; set; }
+        public IDataSourceConfiguration DataSourceConfiguration { get; set; }
 
-		public DataSourceFactory DataSourceFactory { get; set; }
+        public DataSourceFactory DataSourceFactory { get; set; }
 
         public AlgoOne()
         {
-		}
-			
-		public void Run()
-		{
+        }
+
+        public void Run()
+        {
             RandomFail();
             var dataSource = DataSourceFactory.GetDataSource<BigInteger>(DataSourceConfiguration);
-			while (dataSource.HasNext())
-			{
-				var data = dataSource.GetNext();
+            while (dataSource.HasNext())
+            {
+                var data = dataSource.GetNext();
 
-				Console.WriteLine("Doing: " + data);
-			}
+                Console.WriteLine("Doing: " + data);
+            }
 
-			Console.WriteLine("AlgoOne ran.");
-		}
+            Console.WriteLine("AlgoOne ran.");
+        }
 
         private void RandomFail()
         {

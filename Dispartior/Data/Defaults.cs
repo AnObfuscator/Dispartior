@@ -11,7 +11,7 @@ namespace Dispartior.Data
         {
             public static bool Contains(Type type)
             {
-                 return defaultDeserializers.ContainsKey(type);
+                return defaultDeserializers.ContainsKey(type);
             }
 
             public static Type GetFor(Type type)

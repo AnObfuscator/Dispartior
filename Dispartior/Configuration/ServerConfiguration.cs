@@ -10,7 +10,7 @@ namespace Dispartior.Configuration
 
         public int Port { get; set; }
 
-		public int PoolSize { get; set; }
+        public int PoolSize { get; set; }
     }
 }
 

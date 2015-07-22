@@ -4,21 +4,21 @@ using Dispartior.Messaging.Messages.Commands;
 
 namespace Dispartior.Servers.Common
 {
-	public class WorkerAdapter
-	{
-		public ComputeConnector Connector { get; set; }
+    public class WorkerAdapter
+    {
+        public ComputeConnector Connector { get; set; }
 
-		public string Id
-		{
-			get;
-			set;
-		}
+        public string Id
+        {
+            get;
+            set;
+        }
 
-		public RunnerStatus Status
-		{
-			get;
-			set;
-		}
+        public RunnerStatus Status
+        {
+            get;
+            set;
+        }
 
         public Computation Computation
         {
@@ -26,7 +26,7 @@ namespace Dispartior.Servers.Common
             set;
         }
 
-        public void StartComputation (Computation computation)
+        public void StartComputation(Computation computation)
         {
             Status = RunnerStatus.Running;
             Computation = computation;
@@ -41,6 +41,6 @@ namespace Dispartior.Servers.Common
             Status = RunnerStatus.Idle;
             return computation;
         }
-	}
+    }
 }
 

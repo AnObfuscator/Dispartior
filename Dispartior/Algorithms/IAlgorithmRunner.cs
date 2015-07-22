@@ -2,11 +2,11 @@
 
 namespace Dispartior.Algorithms
 {
-	public class IAlgorithmRunner
-	{
-		public IAlgorithmRunner()
-		{
-		}
-	}
+    public class IAlgorithmRunner
+    {
+        public IAlgorithmRunner()
+        {
+        }
+    }
 }
 

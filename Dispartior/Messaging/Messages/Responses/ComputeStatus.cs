@@ -9,7 +9,7 @@ namespace Dispartior.Messaging.Messages.Responses
 
         public DateTime Timestamp { get; set; }
 
-		public Dictionary<string, RunnerStatus> Workers { get; set; }
+        public Dictionary<string, RunnerStatus> Workers { get; set; }
     }
 }
 

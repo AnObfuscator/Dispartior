@@ -41,6 +41,7 @@
       <HintPath>..\packages\Nancy.Hosting.Self.1.2.0\lib\net40\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,7 +88,8 @@
     <Compile Include="Messaging\DataSourceConfigurationJsonConverter.cs" />
     <Compile Include="Data\IDataPartitioner.cs" />
     <Compile Include="Data\Range\RangePartitioner.cs" />
-    <Compile Include="Data\Types\IntDeserializer.cs" />
+    <Compile Include="Data\Database\DatabasePartitioner.cs" />
+    <Compile Include="Data\Defaults.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -104,7 +106,6 @@
     <Folder Include="Data\" />
     <Folder Include="Data\Range\" />
     <Folder Include="Data\Database\" />
-    <Folder Include="Data\Types\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

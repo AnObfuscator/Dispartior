@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dispartior.Messaging.Messages.Responses
+namespace Dispartior.StatusCodes
 {
     public enum ResultStatus
     {

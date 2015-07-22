@@ -87,9 +87,9 @@
     <Compile Include="Data\Range\RangePartitioner.cs" />
     <Compile Include="Data\Database\DatabasePartitioner.cs" />
     <Compile Include="Data\Defaults.cs" />
-    <Compile Include="Messaging\Messages\Responses\RunnerStatus.cs" />
-    <Compile Include="Messaging\Messages\Responses\ResultStatus.cs" />
     <Compile Include="Servers\Common\WorkerAdapter.cs" />
+    <Compile Include="StatusCodes\ResultStatus.cs" />
+    <Compile Include="StatusCodes\RunnerStatus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -106,6 +106,7 @@
     <Folder Include="Data\" />
     <Folder Include="Data\Range\" />
     <Folder Include="Data\Database\" />
+    <Folder Include="StatusCodes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

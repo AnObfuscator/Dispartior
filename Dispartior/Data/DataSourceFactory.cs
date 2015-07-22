@@ -3,35 +3,44 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using Dispartior.Data.Range;
 using Dispartior.Data.Database;
-using Dispartior.Data.Types;
 
 namespace Dispartior.Data
 {
 	public class DataSourceFactory
 	{
-		private readonly IDictionary<Type, Type> dataTypes = new ConcurrentDictionary<Type, Type>();
-		private readonly IDictionary<string, Type> dataPartitioners = new ConcurrentDictionary<string, Type>();
+        private readonly IDictionary<Type, Type> customDataTypes = new ConcurrentDictionary<Type, Type>();
+        private readonly IDictionary<string, Type> customDataPartitioners = new ConcurrentDictionary<string, Type>();
 
 
 		public DataSourceFactory()
 		{
-//			RegisterDataType<int, IntDeserializer, RangePartitioner>();
 		}
 			
-		public void RegisterDataType<T,E,P>() where E : IEntryDeserializer<T>, new() where P : IDataPartitioner
+        public void RegisterDataType<T,E>() where E : IEntryDeserializer<T>, new()
 		{
 			var dataType = typeof(T); 
-			dataTypes.Add(dataType, typeof(E));
-			dataPartitioners.Add(dataType.Name, typeof(P));
+			customDataTypes.Add(dataType, typeof(E));
 		}
+
+        public void RegisterDataPartitioner<P>() where P : IDataPartitioner, new()
+        {
+            var partitionerType = typeof(P); 
+            customDataPartitioners.Add(partitionerType.Name, partitionerType);
+        }
 
 		public IEntryDeserializer<T> GetDeserializer<T>()
 		{
-			if (dataTypes.ContainsKey(typeof(T)))
+			if (customDataTypes.ContainsKey(typeof(T)))
 			{
-				var deserializerType = dataTypes[typeof(T)];
+				var deserializerType = customDataTypes[typeof(T)];
 				return (IEntryDeserializer<T>)Activator.CreateInstance(deserializerType);
 			}
+
+            if (Default.Deserializers.Contains(typeof(T)))
+            {
+                var deserializerType = Default.Deserializers.GetFor(typeof(T));
+                return (IEntryDeserializer<T>)Activator.CreateInstance(deserializerType);
+            }
 
 			return null;
 		}
@@ -39,17 +48,22 @@ namespace Dispartior.Data
 		public IDataPartitioner GetDataPartitioner(IDataSourceConfiguration dataSourceConfiguration)
 		{
 			var typeName = dataSourceConfiguration.TypeName;
+            if (customDataPartitioners.ContainsKey(typeName))
+            {
+                var partitionerType = customDataPartitioners[typeName];
+                return (IDataPartitioner)Activator.CreateInstance(partitionerType);
+            }
 
 			if (typeof(RangeConfiguration).Name.Equals(typeName))
 			{
 				return new RangePartitioner();
 			}
 
-			if (dataPartitioners.ContainsKey(typeName))
-			{
-				var partitionerType = dataPartitioners[typeName];
-				return (IDataPartitioner)Activator.CreateInstance(partitionerType);
-			}
+            if (typeof(DatabaseConfiguration).Name.Equals(typeName))
+            {
+                var databaseConfiguration = dataSourceConfiguration as DatabaseConfiguration;
+                return new DatabasePartitioner(databaseConfiguration);
+            }
 
 			return null;
 		}
@@ -74,4 +88,3 @@ namespace Dispartior.Data
 
 	}
 }
-

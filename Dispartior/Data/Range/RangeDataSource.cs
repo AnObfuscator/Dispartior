@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Dispartior.Data.Range
 {
-    public class RangeDataSource : IDataSource<int>
+    public class RangeDataSource : IDataSource<BigInteger>
     {
-        private readonly int start;
-        private readonly int end;
-        private readonly int stepSize;
+        private readonly BigInteger start;
+        private readonly BigInteger end;
+        private readonly BigInteger stepSize;
 
-        private int next;
+        private BigInteger next;
 
         public RangeDataSource(RangeConfiguration range)
         {
@@ -24,7 +25,7 @@ namespace Dispartior.Data.Range
             return next <= end;
         }
 
-        public int GetNext()
+        public BigInteger GetNext()
         {
             if (!HasNext())
             {

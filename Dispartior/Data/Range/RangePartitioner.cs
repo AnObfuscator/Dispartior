@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Dispartior.Data.Range
 {
@@ -23,7 +24,7 @@ namespace Dispartior.Data.Range
 			var partitionSize = numberOfEntries / partitionCount;
 			var remainder = (numberOfEntries % partitionCount);
 
-			for (int i = 0; i < partitionCount-1; i++)
+			for (BigInteger i = 0; i < partitionCount-1; i++)
 			{
 				var newPartition = BuildNewPartition(rangeConfig, i, partitionSize, partitionSize);
 				partitions.Add(newPartition);
@@ -37,7 +38,7 @@ namespace Dispartior.Data.Range
 			return partitions;
 		}
 
-		public RangeConfiguration BuildNewPartition(RangeConfiguration rangeConfig, int offset, int partitionSize, int range)
+        public RangeConfiguration BuildNewPartition(RangeConfiguration rangeConfig, BigInteger offset, BigInteger partitionSize, BigInteger range)
 		{
 			var newPartition = new RangeConfiguration();
 

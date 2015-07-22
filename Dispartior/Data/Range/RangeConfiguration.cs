@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Dispartior.Data.Range
 {
@@ -15,11 +16,11 @@ namespace Dispartior.Data.Range
 			set { } 
 		}
 
-		public int Start { get; set; }
+        public BigInteger Start { get; set; }
 
-		public int End { get; set; }
+        public BigInteger End { get; set; }
 
-		public int StepSize { get; set; }
+        public BigInteger StepSize { get; set; }
 	}
 }
 

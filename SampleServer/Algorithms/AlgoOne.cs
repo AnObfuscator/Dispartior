@@ -18,13 +18,13 @@ namespace SampleServer.Algorithms
 			
 		public void Run()
 		{
-			DataSourceFactory.GetDataSource<int>(DataSourceConfiguration);
-//			while (DataSource.HasNext())
-//			{
-//				var data = DataSource.GetNext();
-//
-//				Console.WriteLine("Doing: " + data);
-//			}
+			var dataSource = DataSourceFactory.GetDataSource<int>(DataSourceConfiguration);
+			while (dataSource.HasNext())
+			{
+				var data = dataSource.GetNext();
+
+				Console.WriteLine("Doing: " + data);
+			}
 
 			Console.WriteLine("AlgoOne ran.");
 		}

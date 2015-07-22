@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dispartior.StatusCodes;
 
 namespace Dispartior.Messaging.Messages.Responses
 {

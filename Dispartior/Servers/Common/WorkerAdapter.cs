@@ -1,6 +1,5 @@
-﻿using System;
-using Dispartior.Messaging.Messages.Responses;
-using Dispartior.Messaging.Messages.Commands;
+﻿using Dispartior.Messaging.Messages.Commands;
+using Dispartior.StatusCodes;
 
 namespace Dispartior.Servers.Common
 {

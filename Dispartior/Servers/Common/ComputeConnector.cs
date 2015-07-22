@@ -5,6 +5,7 @@ using Dispartior.Configuration;
 using Dispartior.Messaging.Messages.Responses;
 using Dispartior.Messaging.Messages.Requests;
 using Dispartior.Messaging.Messages.Commands;
+using Dispartior.StatusCodes;
 
 namespace Dispartior.Servers.Common
 {

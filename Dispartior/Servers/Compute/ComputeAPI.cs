@@ -35,11 +35,6 @@ namespace Dispartior.Servers.Compute
                 var status = RespondToHeartbeat(heartbeat);
                 return status.Serialize();
             };
-
-            Get["/status"] = _ =>
-            {
-                return HttpStatusCode.OK;
-            };
         }
 
         public ComputeStatus RespondToHeartbeat(Heartbeat heartbeat)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Dispartior.StatusCodes;
 
 namespace Dispartior.Messaging.Messages.Responses
 {

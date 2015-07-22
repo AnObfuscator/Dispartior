@@ -55,16 +55,17 @@ namespace Dispartior.Servers.Mediator
 			
 		public void UpdateComputation()
 		{
-			if (!computationInProgress)
-			{
-				return;
-			}
-
-			Console.WriteLine("Updating Computations...");
 			lock (controllerLock)
 			{
+                if (!computationInProgress)
+                {
+                    return;
+                }
+
+                Console.WriteLine("Updating Computations...");
+
 				Console.WriteLine("Available Tasks: " + todo.Count);
-				var availableWorkers = new List<WorkerInfo>();
+				var availableWorkers = new List<WorkerAdapter>();
 				foreach (var cc in computeNodes)
 				{
 					availableWorkers.AddRange(cc.AvailableWorkers);
@@ -72,27 +73,39 @@ namespace Dispartior.Servers.Mediator
 				Console.WriteLine("Avaliable workers: " + availableWorkers.Count);
 				foreach (var worker in availableWorkers)
 				{
-					if (todo.IsEmpty())
-					{
-						Console.WriteLine("No more tasks.");
-						break;
-					}
-					var computation = todo.Dequeue();
-					computation.Worker = worker.Id;
-					worker.Connector.StartComputation(computation);
-					worker.Status = WorkerStatus.Running;
-					Console.WriteLine("Performaing computation: " + computation.Serialize());
+                    if (todo.IsEmpty())
+                    {
+                        Console.WriteLine("No more tasks.");
+                        break;
+                    }
+
+                    AsignNextTaskTo(worker);
 				}
 
 				StopIfFinished();
 			}
 		}
 
+        private void AsignNextTaskTo(WorkerAdapter worker)
+        {
+            var computation = todo.Dequeue();
+            try
+            {
+                worker.StartComputation(computation);
+                Console.WriteLine("Performaing computation: " + computation.Serialize());
+            }
+            catch (Exception ex)
+            {
+                todo.Enqueue(computation);
+                Console.WriteLine(string.Format("Could not perform calculation on {0}:{1} -- {2}", worker.Connector.Name, worker.Id, computation));  
+            }
+        }
+
 		private void StopIfFinished()
 		{
 			if (todo.IsEmpty())
 			{
-				if (computeNodes.TrueForAll(cn => cn.Workers.TrueForAll(w => w.Status == WorkerStatus.Idle)))
+				if (computeNodes.TrueForAll(cn => cn.Workers.TrueForAll(w => w.Status == RunnerStatus.Idle)))
 				{
 					computationInProgress = false;
 					Console.WriteLine("Computation Finished.");
@@ -105,7 +118,12 @@ namespace Dispartior.Servers.Mediator
 			lock (controllerLock)
 			{
 				var worker = computeNodes.Find(cn => cn.UUID == result.UUID).Workers.Find(w => w.Id == result.WorkerId);
-				worker.Status = WorkerStatus.Idle;
+                var computation = worker.FinishComputation();
+                if (result.Status == ResultStatus.Failure)
+                {
+                    Console.WriteLine("Computation failure... reattempting.");
+                    todo.Enqueue(computation);
+                }
 			}
 		}
 			

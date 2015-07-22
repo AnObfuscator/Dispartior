@@ -3,11 +3,11 @@
 /**
  * TODO
  * * (1) create a master & slave that talk to each other
- * (1a) port to HTTP using NancyFX
- * (2) create a simple algorithm, get the master to execute on the slave
+ * * (1a) port to HTTP using NancyFX
+ * * (2) create a simple algorithm, get the master to execute on the slave
  * (3) create a multi-step algorithm, get the master to execute each step on the slaves
  * (4) generalize the whole algorithm/multi-step thing like we talked (separate out the framework from the specific implementations)
- * (5) multithread slave algorithms
+ * * (5) multithread slave algorithms
  * (6) implement UI
  */
 

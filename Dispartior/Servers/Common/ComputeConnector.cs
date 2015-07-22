@@ -12,9 +12,9 @@ namespace Dispartior.Servers.Common
     {
 		private readonly ServerConfiguration computeNodeInfo;
 		private readonly ServiceInterface serviceInterface;
-		private readonly List<WorkerInfo> workers;
+		private readonly List<WorkerAdapter> workers;
 
-		public List<WorkerInfo> Workers
+		public List<WorkerAdapter> Workers
 		{
 			get
 			{
@@ -22,11 +22,11 @@ namespace Dispartior.Servers.Common
 			}
 		}
 
-		public IEnumerable<WorkerInfo> AvailableWorkers
+		public IEnumerable<WorkerAdapter> AvailableWorkers
 		{
 			get
 			{
-				return workers.Where(w => w.Status == WorkerStatus.Idle);
+				return workers.Where(w => w.Status == RunnerStatus.Idle);
 			}
 		}
 
@@ -42,12 +42,12 @@ namespace Dispartior.Servers.Common
 			this.computeNodeInfo = computeInfo;
 			serviceInterface = new ServiceInterface(computeNodeInfo.IpAddress, computeNodeInfo.Port);
 
-			workers = new List<WorkerInfo>();
+			workers = new List<WorkerAdapter>();
 			for (int i = 0; i < computeInfo.PoolSize; i++)
 			{
-				var workerInfo = new WorkerInfo();
+				var workerInfo = new WorkerAdapter();
 				workerInfo.Id = string.Format("Worker_{0}", i);
-				workerInfo.Status = WorkerStatus.Idle;
+				workerInfo.Status = RunnerStatus.Idle;
 				workerInfo.Connector = this;
 				workers.Add(workerInfo);
 			}

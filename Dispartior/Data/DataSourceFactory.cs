@@ -72,8 +72,8 @@ namespace Dispartior.Data
 		{
 			var rangeDefinition = dataSourceConfiguration as RangeConfiguration;
 			if (rangeDefinition != null)
-			{
-				return new RangeDataSource(rangeDefinition) as IDataSource<T>;
+            {
+                return (IDataSource<T>)new RangeDataSource(rangeDefinition);
 			}
 
 			var databaseConfiguration = dataSourceConfiguration as DatabaseConfiguration;

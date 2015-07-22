@@ -62,15 +62,12 @@
     <Compile Include="Servers\Compute\ComputeServer.cs" />
     <Compile Include="Servers\Mediator\MediatorAPI.cs" />
     <Compile Include="Servers\Mediator\MediatorServer.cs" />
-    <Compile Include="Servers\Common\MediatorInfo.cs" />
     <Compile Include="Servers\Common\ComputeConnector.cs" />
     <Compile Include="Servers\Compute\WorkerPool.cs" />
     <Compile Include="Messaging\Messages\Responses\ComputeStatus.cs" />
-    <Compile Include="Messaging\Messages\Responses\WorkerStatus.cs" />
     <Compile Include="Servers\Mediator\MediatorBootstrapper.cs" />
     <Compile Include="Servers\Common\ServiceInterface.cs" />
     <Compile Include="Servers\Mediator\Controller.cs" />
-    <Compile Include="Servers\Common\WorkerInfo.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Servers\ApiBootstrapper.cs" />
     <Compile Include="Algorithms\IAlgorithmRunner.cs" />
@@ -90,6 +87,9 @@
     <Compile Include="Data\Range\RangePartitioner.cs" />
     <Compile Include="Data\Database\DatabasePartitioner.cs" />
     <Compile Include="Data\Defaults.cs" />
+    <Compile Include="Messaging\Messages\Responses\RunnerStatus.cs" />
+    <Compile Include="Messaging\Messages\Responses\ResultStatus.cs" />
+    <Compile Include="Servers\Common\WorkerAdapter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

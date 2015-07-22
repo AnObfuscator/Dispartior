@@ -8,8 +8,8 @@ namespace Dispartior.Servers.Compute
 {
 	public class Worker : IAlgorithmRunner
     {
-		private volatile WorkerStatus status = WorkerStatus.Idle;
-		public WorkerStatus Status 
+		private volatile RunnerStatus status = RunnerStatus.Idle;
+		public RunnerStatus Status 
 		{ 
 			get
 			{
@@ -29,18 +29,23 @@ namespace Dispartior.Servers.Compute
 
 		public void Run(IAlgorithm algorithm)
 		{
-			status = WorkerStatus.Running;
+			status = RunnerStatus.Running;
 			algorithm.AlgorithmRunner = this;
 
 			new Thread(() =>
 				{
-					Console.WriteLine("Worker thread running algorithm...");
-
-					algorithm.Run();
-
-					status = WorkerStatus.Idle;
-
-					workerPool.FinishComputation(Id);
+                    try
+                    {
+					    Console.WriteLine("Worker thread running algorithm...");
+    					algorithm.Run();
+    					status = RunnerStatus.Idle;
+    					workerPool.FinishComputation(Id, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error in thread running algorithm: " + ex.Message);
+                        workerPool.FinishComputation(Id, false);
+                    }
 				}).Start();
 		}
     }

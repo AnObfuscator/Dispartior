@@ -15,11 +15,11 @@ namespace Dispartior.Servers.Compute
 		private readonly string nodeId;
 		private readonly DataSourceFactory dataSourceFactory;
 
-		public IDictionary<string, WorkerStatus> Status
+		public IDictionary<string, RunnerStatus> Status
 		{
 			get
 			{
-				var status = new Dictionary<string, WorkerStatus>();
+				var status = new Dictionary<string, RunnerStatus>();
 				foreach (var entry in workers)
 				{
 					status[entry.Key] = entry.Value.Status;
@@ -32,7 +32,6 @@ namespace Dispartior.Servers.Compute
 		{
 			this.nodeId = nodeId;
 			this.mediator = mediator;
-			this.dataSourceFactory = dataSourceFactory;
 
 			workers = new ConcurrentDictionary<string, Worker>();
 			for (int i = 0; i < poolSize; i++)
@@ -45,12 +44,21 @@ namespace Dispartior.Servers.Compute
 		public void AssignToWorker(IAlgorithm algorithm, string workerId)
 		{
 			Console.WriteLine(string.Format("Running algo {0} on worker {1}", algorithm, workerId));
-			workers[workerId].Run(algorithm);
+            try 
+            {
+			    workers[workerId].Run(algorithm);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Format("Error running algo {0} on worker {1}: {2}", algorithm, workerId, ex.Message));
+                FinishComputation(workerId, false);
+            }
 		}
 
-		public void FinishComputation(string workerId)
+        public void FinishComputation(string workerId, bool success)
 		{
-			var result = new ComputationResult{ UUID = nodeId, WorkerId = workerId }; 
+            var status = success ? ResultStatus.Success : ResultStatus.Failure;
+            var result = new ComputationResult{ UUID = nodeId, WorkerId = workerId, Status = status }; 
 			mediator.SendComputationResult(result);
 		}
 

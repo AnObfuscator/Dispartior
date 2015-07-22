@@ -55,6 +55,7 @@ namespace Dispartior.Servers.Compute
 			var workerId = computation.Worker;
 			var algoName = computation.Algorithm;
 			var dataSourceConfig = computation.DataSourceConfiguration;
+            Console.WriteLine("Starting computation: " + computation.Serialize());
 			var algorithm = algorithmFactory.CreateAlgorithm(algoName);
 			algorithm.DataSourceConfiguration = dataSourceConfig;
 			workerPool.AssignToWorker(algorithm, workerId);

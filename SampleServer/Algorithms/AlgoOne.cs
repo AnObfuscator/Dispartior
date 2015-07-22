@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Dispartior.Algorithms;
 using Dispartior.Data;
 
@@ -18,7 +19,8 @@ namespace SampleServer.Algorithms
 			
 		public void Run()
 		{
-			var dataSource = DataSourceFactory.GetDataSource<int>(DataSourceConfiguration);
+            RandomFail();
+            var dataSource = DataSourceFactory.GetDataSource<BigInteger>(DataSourceConfiguration);
 			while (dataSource.HasNext())
 			{
 				var data = dataSource.GetNext();
@@ -28,6 +30,15 @@ namespace SampleServer.Algorithms
 
 			Console.WriteLine("AlgoOne ran.");
 		}
+
+        private void RandomFail()
+        {
+            var random = new Random();
+            if (random.NextDouble() < 0.2) // 20% chance of failure
+            {
+                throw new Exception("************* Whoops Random Error! *************");
+            }
+        }
 
     }
 }

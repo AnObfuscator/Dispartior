@@ -2,6 +2,7 @@
 using System.Numerics;
 using Dispartior.Algorithms;
 using Dispartior.Data;
+using System.Collections.Generic;
 
 namespace SampleServer.Algorithms
 {
@@ -17,9 +18,11 @@ namespace SampleServer.Algorithms
         {
         }
 
-        public void Run()
+        public void Run(IDictionary<string, string> parameters)
         {
             RandomFail();
+
+            var number = BigInteger.Parse(parameters["number"]);
             var dataSource = DataSourceFactory.GetDataSource<BigInteger>(DataSourceConfiguration);
             while (dataSource.HasNext())
             {

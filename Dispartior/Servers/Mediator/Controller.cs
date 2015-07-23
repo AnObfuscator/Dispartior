@@ -45,6 +45,7 @@ namespace Dispartior.Servers.Mediator
                 {
                     var computationPartition = new Computation();
                     computationPartition.Algorithm = computation.Algorithm;
+                    computationPartition.Parameters = computation.Parameters;
                     computationPartition.DataSourceConfiguration = dataPartition;
                     todo.Enqueue(computationPartition);
                 }

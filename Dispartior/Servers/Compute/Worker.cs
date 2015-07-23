@@ -2,6 +2,7 @@
 using System.Threading;
 using Dispartior.Algorithms;
 using Dispartior.StatusCodes;
+using System.Collections.Generic;
 
 namespace Dispartior.Servers.Compute
 {
@@ -27,7 +28,7 @@ namespace Dispartior.Servers.Compute
             this.workerPool = workerPool;
         }
 
-        public void Run(IAlgorithm algorithm)
+        public void Run(IAlgorithm algorithm, IDictionary<string, string> parameters)
         {
             status = RunnerStatus.Running;
             algorithm.AlgorithmRunner = this;
@@ -37,7 +38,7 @@ namespace Dispartior.Servers.Compute
                     try
                     {
                         Console.WriteLine("Worker thread running algorithm...");
-                        algorithm.Run();
+                        algorithm.Run(parameters);
                         status = RunnerStatus.Idle;
                         workerPool.FinishComputation(Id, true);
                     }

@@ -24,6 +24,8 @@ using Dispartior.Messaging.Messages.Commands;
 using Dispartior.Configuration;
 using Dispartior.Servers;
 using Dispartior.Data;
+using System.Collections.Generic;
+using Dispartior.Data.Range;
 
 namespace SampleServer
 {
@@ -33,7 +35,21 @@ namespace SampleServer
 
         public static void Main(string[] args)
         {
-            var computation = new Computation { Algorithm = typeof(AlgoOne).ToString(), PartitionSize = 100 };
+            var computation = new Computation 
+            { 
+                Algorithm = typeof(AlgoOne).Name,
+                Parameters = new Dictionary<string, string> 
+                    { 
+                        { "number", "1234" } 
+                    },
+                DataSourceConfiguration = new RangeConfiguration 
+                    {
+                        Start = 0,
+                        End = 10000,
+                        StepSize = 1
+                    },
+                PartitionSize = 100
+            };
             Console.WriteLine("Computation start body: " + computation.Serialize());
 
             var serverName = args[0];

@@ -1,5 +1,6 @@
 ﻿using System;
 using Dispartior.Data;
+using System.Collections.Generic;
 
 namespace Dispartior.Algorithms
 {
@@ -11,7 +12,7 @@ namespace Dispartior.Algorithms
 
         DataSourceFactory DataSourceFactory { get; set; }
 
-        void Run();
+        void Run(IDictionary<string, string> parameters);
     }
 }
 

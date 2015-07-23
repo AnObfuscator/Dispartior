@@ -22,10 +22,9 @@ namespace Dispartior.Data
             customDataTypes.Add(dataType, typeof(E));
         }
 
-        public void RegisterDataPartitioner<P>() where P : IDataPartitioner, new()
+        public void RegisterDataPartitioner<P, D>() where P : IDataPartitioner, new() where D : IDataSourceConfiguration
         {
-            var partitionerType = typeof(P); 
-            customDataPartitioners.Add(partitionerType.Name, partitionerType);
+            customDataPartitioners.Add(typeof(D).Name, typeof(P));
         }
 
         public IEntryDeserializer<T> GetDeserializer<T>()

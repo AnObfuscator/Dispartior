@@ -50,10 +50,11 @@ namespace Dispartior.Servers.Compute
             var workerId = computation.Worker;
             var algoName = computation.Algorithm;
             var dataSourceConfig = computation.DataSourceConfiguration;
+            var parameters = computation.Parameters;
             Console.WriteLine("Starting computation: " + computation.Serialize());
             var algorithm = algorithmFactory.CreateAlgorithm(algoName);
             algorithm.DataSourceConfiguration = dataSourceConfig;
-            workerPool.AssignToWorker(algorithm, workerId);
+            workerPool.AssignToWorker(algorithm, parameters, workerId);
         }
 
         public T DeserializeBody<T>()

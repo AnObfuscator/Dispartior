@@ -1,5 +1,5 @@
-﻿using System;
-using Dispartior.Data;
+﻿using Dispartior.Data;
+using System.Collections.Generic;
 
 namespace Dispartior.Messaging.Messages.Commands
 {
@@ -8,6 +8,8 @@ namespace Dispartior.Messaging.Messages.Commands
         public string UUID { get; set; }
 
         public string Worker { get; set; }
+
+        public Dictionary<string, string> Parameters { get; set; }
 
         public string Algorithm { get; set; }
 

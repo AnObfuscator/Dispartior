@@ -42,12 +42,12 @@ namespace Dispartior.Servers.Compute
             }
         }
 
-        public void AssignToWorker(IAlgorithm algorithm, string workerId)
+        public void AssignToWorker(IAlgorithm algorithm, IDictionary<string, string> parameters, string workerId)
         {
             Console.WriteLine(string.Format("Running algo {0} on worker {1}", algorithm, workerId));
             try
             {
-                workers[workerId].Run(algorithm);
+                workers[workerId].Run(algorithm, parameters);
             }
             catch (Exception ex)
             {

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dispartior", "Dispartior\Di
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleServer", "SampleServer\SampleServer.csproj", "{02F47F05-C0C2-4B41-ACDA-04DC5C5C8E5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dispartior.Tests", "Dispartior.Tests\Dispartior.Tests.csproj", "{A8F2E020-DD7C-4AAF-984E-FD503AAD1C85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,6 +21,10 @@ Global
 		{8159F397-5768-467B-B974-10F0FF607E23}.Debug|x86.Build.0 = Debug|x86
 		{8159F397-5768-467B-B974-10F0FF607E23}.Release|x86.ActiveCfg = Release|x86
 		{8159F397-5768-467B-B974-10F0FF607E23}.Release|x86.Build.0 = Release|x86
+		{A8F2E020-DD7C-4AAF-984E-FD503AAD1C85}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A8F2E020-DD7C-4AAF-984E-FD503AAD1C85}.Debug|x86.Build.0 = Debug|Any CPU
+		{A8F2E020-DD7C-4AAF-984E-FD503AAD1C85}.Release|x86.ActiveCfg = Release|Any CPU
+		{A8F2E020-DD7C-4AAF-984E-FD503AAD1C85}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

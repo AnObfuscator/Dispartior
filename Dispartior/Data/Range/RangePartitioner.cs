@@ -10,10 +10,10 @@ namespace Dispartior.Data.Range
         {
         }
 
-        public List<IDataSourceConfiguration> Partition(IDataSourceConfiguration dataSourceConfiguration, int partitionCount)
+        public IEnumerable<IDataSetDefinition> Partition(IDataSetDefinition dataSetDefinition, int partitionCount)
         {
-            var partitions = new List<IDataSourceConfiguration>();
-            var rangeConfig = dataSourceConfiguration as RangeConfiguration;
+            var partitions = new List<IDataSetDefinition>();
+            var rangeConfig = dataSetDefinition as RangeDataSetDefinition;
             if (rangeConfig == null)
             {
                 return partitions;
@@ -38,9 +38,9 @@ namespace Dispartior.Data.Range
             return partitions;
         }
 
-        public RangeConfiguration BuildNewPartition(RangeConfiguration rangeConfig, BigInteger offset, BigInteger partitionSize, BigInteger range)
+        public RangeDataSetDefinition BuildNewPartition(RangeDataSetDefinition rangeConfig, BigInteger offset, BigInteger partitionSize, BigInteger range)
         {
-            var newPartition = new RangeConfiguration();
+            var newPartition = new RangeDataSetDefinition();
 
             var startOffset = offset * partitionSize;
             newPartition.Start = startOffset + rangeConfig.Start;

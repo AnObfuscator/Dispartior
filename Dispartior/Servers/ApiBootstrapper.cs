@@ -9,6 +9,7 @@ using Dispartior.Servers.Compute;
 using Dispartior.Algorithms;
 using Dispartior.Servers.Mediator;
 using Dispartior.Data;
+using Dispartior.Servers.Cache;
 
 namespace Dispartior.Servers
 {
@@ -21,6 +22,11 @@ namespace Dispartior.Servers
         private readonly AlgorithmFactory algoFactory;
 
         private readonly Controller controller;
+
+        public ApiBootstrapper()
+        {
+            serverType = ServerTypes.Cache;
+        }
 
         public ApiBootstrapper(Controller controller)
         {
@@ -50,7 +56,7 @@ namespace Dispartior.Servers
             container.Register<MediatorAPI>();
             container.Register(typeof(Controller), controller);
 //			}
-
+            container.Register<CacheAPI>();
         }
 
     }

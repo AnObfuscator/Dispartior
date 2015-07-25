@@ -8,12 +8,12 @@ namespace Dispartior.Algorithms
     public class AlgorithmFactory
     {
         private readonly IDictionary<string, Type> algorithms;
-        private readonly DataSourceFactory dataSourceFactory;
+        private readonly DataSource dataSource;
 
-        public AlgorithmFactory(DataSourceFactory dataSourceFactory)
+        public AlgorithmFactory(DataSource dataSource)
         {
             algorithms = new ConcurrentDictionary<string, Type>();
-            this.dataSourceFactory = dataSourceFactory;
+            this.dataSource = dataSource;
         }
 
         public void RegisterAlgorithm<T>() where T : IAlgorithm, new()
@@ -34,7 +34,7 @@ namespace Dispartior.Algorithms
             {
                 var algoType = algorithms[algorithmName];
                 var algo = (IAlgorithm)Activator.CreateInstance(algoType);
-                algo.DataSourceFactory = dataSourceFactory;
+                algo.DataSource = dataSource;
                 return algo;
             }
             catch (Exception ex)

@@ -7,9 +7,9 @@ using Dispartior.Data.Database;
 
 namespace Dispartior.Messaging
 {
-    public class DataSourceConfigurationJsonConverter : JsonConverter
+    public class DataSetDefinitionJsonConverter : JsonConverter
     {
-        private Type interfaceType = typeof(IDataSourceConfiguration);
+        private Type interfaceType = typeof(IDataSetDefinition);
 
         public override bool CanConvert(Type objectType)
         {
@@ -34,7 +34,7 @@ namespace Dispartior.Messaging
         {
             // TODO fix this...
 //			var typeName = target.GetValue("TypeName");
-            return typeof(RangeConfiguration);
+            return typeof(RangeDataSetDefinition);
         }
     }
 }

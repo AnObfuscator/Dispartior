@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Dispartior.Data.Range
 {
-    public class RangeDataSource : IDataSource<BigInteger>
+    public class RangeDataSet : IDataSet<BigInteger>
     {
         private readonly BigInteger start;
         private readonly BigInteger end;
@@ -11,7 +11,15 @@ namespace Dispartior.Data.Range
 
         private BigInteger next;
 
-        public RangeDataSource(RangeConfiguration range)
+        public BigInteger Count
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public RangeDataSet(RangeDataSetDefinition range)
         {
             start = range.Start;
             end = range.End;
@@ -37,6 +45,10 @@ namespace Dispartior.Data.Range
             return toReturn;
         }
 
+        public void SaveResult(object result)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

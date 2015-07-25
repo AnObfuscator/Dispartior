@@ -5,7 +5,7 @@ namespace Dispartior.Data
     /*
 	 * Interface to make DataSource type system and serialization work
 	 */
-    public interface IDataSourceConfiguration
+    public interface IDataSetDefinition
     {
         string TypeName { get; set; }
     }

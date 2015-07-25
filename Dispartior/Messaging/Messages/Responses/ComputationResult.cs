@@ -1,4 +1,5 @@
 ﻿using Dispartior.StatusCodes;
+using Dispartior.Data;
 
 namespace Dispartior.Messaging.Messages.Responses
 {
@@ -9,6 +10,8 @@ namespace Dispartior.Messaging.Messages.Responses
         public string WorkerId { get; set; }
 
         public ResultStatus Status { get; set; }
+
+        public IDataSetDefinition ResultSetDefinition { get; set; }
     }
 }
 

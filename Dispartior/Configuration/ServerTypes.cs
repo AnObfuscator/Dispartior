@@ -5,7 +5,8 @@ namespace Dispartior.Configuration
     public enum ServerTypes
     {
         Mediator,
-        Compute
+        Compute,
+        Cache
     }
 }
 

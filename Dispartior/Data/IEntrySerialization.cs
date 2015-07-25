@@ -2,9 +2,11 @@
 
 namespace Dispartior.Data
 {
-    public interface IEntryDeserializer<T>
+    public interface IEntrySerialization<T>
     {
         T Deserialize(string entry);
+
+        string Serialize(T entry);
     }
 }
 

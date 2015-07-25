@@ -14,7 +14,6 @@ namespace Dispartior.Servers.Compute
         private readonly ConcurrentDictionary<string, Worker> workers;
         private readonly MediatorConnector mediator;
         private readonly string nodeId;
-        private readonly DataSourceFactory dataSourceFactory;
 
         public IDictionary<string, RunnerStatus> Status
         {
@@ -56,10 +55,10 @@ namespace Dispartior.Servers.Compute
             }
         }
 
-        public void FinishComputation(string workerId, bool success)
+        public void FinishComputation(string workerId, bool success, IDataSetDefinition resultSetDefinition = null)
         {
             var status = success ? ResultStatus.Success : ResultStatus.Failure;
-            var result = new ComputationResult{ UUID = nodeId, WorkerId = workerId, Status = status }; 
+            var result = new ComputationResult{ UUID = nodeId, WorkerId = workerId, Status = status, ResultSetDefinition = resultSetDefinition }; 
             mediator.SendComputationResult(result);
         }
 

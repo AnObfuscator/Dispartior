@@ -10,28 +10,35 @@ namespace SampleServer.Algorithms
     {
         public IAlgorithmRunner AlgorithmRunner { get; set; }
 
-        public IDataSourceConfiguration DataSourceConfiguration { get; set; }
+        public IDataSetDefinition DataSetDefinition { get; set; }
 
-        public DataSourceFactory DataSourceFactory { get; set; }
+        public DataSource DataSource { get; set; }
 
         public AlgoOne()
         {
         }
 
-        public void Run(IDictionary<string, string> parameters)
+        public IDataSetDefinition Run(IDictionary<string, string> parameters)
         {
             RandomFail();
 
             var number = BigInteger.Parse(parameters["number"]);
-            var dataSource = DataSourceFactory.GetDataSource<BigInteger>(DataSourceConfiguration);
-            while (dataSource.HasNext())
+            var dataSet = DataSource.GetDataSet<BigInteger>(DataSetDefinition);
+            var results = new List<BigInteger>();
+            while (dataSet.HasNext())
             {
-                var data = dataSource.GetNext();
+                var data = dataSet.GetNext();
+                var result = number + data;
+                results.Add(result);
+                Console.WriteLine("Calculation: {0} + {1} = {2} " + number, data, result);
 
-                Console.WriteLine("Doing: " + data);
             }
+            //dataSource.SaveResult(result);
+            var resultDataSet = DataSource.SaveResults(results);
 
             Console.WriteLine("AlgoOne ran.");
+
+            return resultDataSet;
         }
 
         private void RandomFail()

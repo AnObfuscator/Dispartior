@@ -5,12 +5,12 @@ namespace Dispartior.Data.Database
 {
     public class DatabasePartitioner : IDataPartitioner
     {
-        public DatabasePartitioner(DatabaseConfiguration databaseConfiguration)
+        public DatabasePartitioner(DatabaseDataSetDefinition databaseConfiguration)
         {
             throw new NotImplementedException();
         }
 
-        public List<IDataSourceConfiguration> Partition(IDataSourceConfiguration dataSourceConfiguration, int partitionSize)
+        public IEnumerable<IDataSetDefinition> Partition(IDataSetDefinition dataSetDefinition, int partitionSize)
         {
             throw new NotImplementedException();
         }

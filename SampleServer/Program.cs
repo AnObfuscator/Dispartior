@@ -42,7 +42,7 @@ namespace SampleServer
                     { 
                         { "number", "1234" } 
                     },
-                DataSourceConfiguration = new RangeConfiguration 
+                DataSetDefinition = new RangeDataSetDefinition 
                     {
                         Start = 0,
                         End = 10000,
@@ -57,12 +57,14 @@ namespace SampleServer
             var configLoader = new ConfigurationLoader(DefaultConfigFilename);
             var systemConfig = configLoader.LoadConfiguration();
 
-            var dataSourceFactory = new DataSourceFactory();
+            var cacheDatabase = systemConfig.Databases["cache"];
 
-            var algoFactory = new AlgorithmFactory(dataSourceFactory);
+            var dataSource = new DataSource(cacheDatabase);
+
+            var algoFactory = new AlgorithmFactory(dataSource);
             algoFactory.RegisterAlgorithm<AlgoOne>();
 
-            var serverFactory = new ServerFactory(systemConfig, algoFactory, dataSourceFactory);
+            var serverFactory = new ServerFactory(systemConfig, algoFactory, dataSource);
 
             var server = serverFactory.CreateServer(serverName);
             server.Start();

@@ -23,13 +23,13 @@ namespace Dispartior.Servers.Mediator
 
         private readonly Queue<Computation> todo;
 
-        private readonly DataSourceFactory dataSourceFactory;
+        private readonly DataSource dataSource;
 
-        public Controller(DataSourceFactory dataSourceFactory)
+        public Controller(DataSource dataSource)
         {
             todo = new Queue<Computation>();
             computeNodes = new List<ComputeConnector>();
-            this.dataSourceFactory = dataSourceFactory;
+            this.dataSource = dataSource;
         }
 
         public void StartComputation(Computation computation)
@@ -38,15 +38,15 @@ namespace Dispartior.Servers.Mediator
             {
                 Console.WriteLine("Computation: " + computation.Serialize());
                 currentComputation = computation;
-                var dataSourceConfig = computation.DataSourceConfiguration;
-                var partitioner = dataSourceFactory.GetDataPartitioner(dataSourceConfig);
+                var dataSourceConfig = computation.DataSetDefinition;
+                var partitioner = dataSource.GetDataPartitioner(dataSourceConfig);
                 var partitions = partitioner.Partition(dataSourceConfig, computation.PartitionSize);
                 foreach (var dataPartition in partitions)
                 {
                     var computationPartition = new Computation();
                     computationPartition.Algorithm = computation.Algorithm;
                     computationPartition.Parameters = computation.Parameters;
-                    computationPartition.DataSourceConfiguration = dataPartition;
+                    computationPartition.DataSetDefinition = dataPartition;
                     todo.Enqueue(computationPartition);
                 }
                 computationInProgress = true;

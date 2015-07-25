@@ -5,7 +5,7 @@ namespace Dispartior.Data
 {
     public interface IDataPartitioner
     {
-        List<IDataSourceConfiguration> Partition(IDataSourceConfiguration dataSourceConfiguration, int partitionSize);
+        IEnumerable<IDataSetDefinition> Partition(IDataSetDefinition dataSetDefinition, int partitionSize);
     }
 }
 

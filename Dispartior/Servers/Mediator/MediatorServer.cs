@@ -6,6 +6,7 @@ using Nancy.Hosting.Self;
 using Nancy;
 using Dispartior.Configuration;
 using Dispartior.Data;
+using Dispartior.Servers.Common;
 
 namespace Dispartior.Servers.Mediator
 {
@@ -15,18 +16,18 @@ namespace Dispartior.Servers.Mediator
         private readonly Controller controller;
         private readonly DefaultNancyBootstrapper bootstrapper;
 
-        public MediatorServer(SystemConfiguration systemConfig, DataSourceFactory dataSourceFactory)
+        public MediatorServer(SystemConfiguration systemConfig, DataSource dataSource)
         {
             config = systemConfig.Servers.First(kvp => kvp.Value.Type == ServerTypes.Mediator).Value;
-            controller = new Controller(dataSourceFactory);
+            controller = new Controller(dataSource);
 //			bootstrapper = new MediatorBootstrapper(controller);
             bootstrapper = new ApiBootstrapper(controller);
         }
 
         public void Start()
         {
-            var url = BuildUri();
-            var apiConfig = BuildApiConfiguration();
+            var url = ServerUtils.BuildUri(config);
+            var apiConfig = ServerUtils.BuildApiConfiguration();
             StaticConfiguration.DisableErrorTraces = false;
             using (var mediatorAPI = new NancyHost(url, bootstrapper, apiConfig))
             {
@@ -55,19 +56,6 @@ namespace Dispartior.Servers.Mediator
         private void UpdateComputations(object timerParam)
         {
             controller.UpdateComputation();
-        }
-
-        private Uri BuildUri()
-        {
-            var address = string.Format("http://{0}:{1}", config.IpAddress, config.Port);
-            return new Uri(address);
-        }
-
-        private HostConfiguration BuildApiConfiguration()
-        {
-            var hostConfig = new HostConfiguration();
-            hostConfig.RewriteLocalhost = false;
-            return hostConfig;
         }
 			
     }

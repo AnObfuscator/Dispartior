@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace Dispartior.Data.Range
 {
-    public class RangeConfiguration : IDataSourceConfiguration
+    public class RangeDataSetDefinition : IDataSetDefinition
     {
-        private static readonly string typeName = typeof(RangeConfiguration).Name;
+        private static readonly string typeName = typeof(RangeDataSetDefinition).Name;
 
         public string TypeName
         { 

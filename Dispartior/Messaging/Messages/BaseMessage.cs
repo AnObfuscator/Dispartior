@@ -5,7 +5,7 @@ namespace Dispartior.Messaging.Messages
 {
     public abstract class BaseMessage
     {
-        private static readonly DataSourceConfigurationJsonConverter dataSourceConfigConverter = new DataSourceConfigurationJsonConverter();
+        private static readonly DataSetDefinitionJsonConverter dataSourceConfigConverter = new DataSetDefinitionJsonConverter();
 
         public virtual string Serialize()
         {

@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,25 +72,34 @@
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Servers\ApiBootstrapper.cs" />
     <Compile Include="Algorithms\IAlgorithmRunner.cs" />
-    <Compile Include="Data\IDataSource.cs" />
-    <Compile Include="Data\DataSourceFactory.cs" />
     <Compile Include="Messaging\Messages\Commands\Register.cs" />
     <Compile Include="Messaging\Messages\Responses\ComputationResult.cs" />
     <Compile Include="Servers\Common\MediatorConnector.cs" />
-    <Compile Include="Data\Range\RangeDataSource.cs" />
-    <Compile Include="Data\IEntryDeserializer.cs" />
-    <Compile Include="Data\IDataSourceConfiguration.cs" />
-    <Compile Include="Data\Database\DatabaseConfiguration.cs" />
-    <Compile Include="Data\Range\RangeConfiguration.cs" />
-    <Compile Include="Data\Database\DatabaseDataSource.cs" />
-    <Compile Include="Messaging\DataSourceConfigurationJsonConverter.cs" />
     <Compile Include="Data\IDataPartitioner.cs" />
     <Compile Include="Data\Range\RangePartitioner.cs" />
     <Compile Include="Data\Database\DatabasePartitioner.cs" />
-    <Compile Include="Data\Defaults.cs" />
     <Compile Include="Servers\Common\WorkerAdapter.cs" />
     <Compile Include="StatusCodes\ResultStatus.cs" />
     <Compile Include="StatusCodes\RunnerStatus.cs" />
+    <Compile Include="Servers\Cache\CacheServer.cs" />
+    <Compile Include="Data\IEntrySerialization.cs" />
+    <Compile Include="Data\IDataSet.cs" />
+    <Compile Include="Data\DataSource.cs" />
+    <Compile Include="Data\Range\RangeDataSet.cs" />
+    <Compile Include="Data\Database\DatabaseDataSet.cs" />
+    <Compile Include="Data\Drivers\DispartiorCacheDriver.cs" />
+    <Compile Include="Configuration\DatabaseConfiguration.cs" />
+    <Compile Include="Servers\Cache\CacheAPI.cs" />
+    <Compile Include="Data\IDataSourceDriver.cs" />
+    <Compile Include="Math\BigIntegerExtensions.cs" />
+    <Compile Include="Data\Database\DatabaseDataSetDefinition.cs" />
+    <Compile Include="Data\Range\RangeDataSetDefinition.cs" />
+    <Compile Include="Messaging\DataSetDefinitionJsonConverter.cs" />
+    <Compile Include="Data\IDataSetDefinition.cs" />
+    <Compile Include="Data\Default.Serialization.cs" />
+    <Compile Include="Data\Default.Drivers.cs" />
+    <Compile Include="Servers\Cache\CacheEntry.cs" />
+    <Compile Include="Servers\Common\ServerUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -107,6 +117,9 @@
     <Folder Include="Data\Range\" />
     <Folder Include="Data\Database\" />
     <Folder Include="StatusCodes\" />
+    <Folder Include="Servers\Cache\" />
+    <Folder Include="Data\Drivers\" />
+    <Folder Include="Math\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

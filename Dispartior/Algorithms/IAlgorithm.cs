@@ -6,13 +6,13 @@ namespace Dispartior.Algorithms
 {
     public interface IAlgorithm
     {
-        IDataSourceConfiguration DataSourceConfiguration { get; set; }
+        IDataSetDefinition DataSetDefinition { get; set; }
 
         IAlgorithmRunner AlgorithmRunner { get; set; }
 
-        DataSourceFactory DataSourceFactory { get; set; }
+        DataSource DataSource { get; set; }
 
-        void Run(IDictionary<string, string> parameters);
+        IDataSetDefinition Run(IDictionary<string, string> parameters);
     }
 }
 

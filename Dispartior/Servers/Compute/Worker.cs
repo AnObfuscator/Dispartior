@@ -38,14 +38,17 @@ namespace Dispartior.Servers.Compute
                     try
                     {
                         Console.WriteLine("Worker thread running algorithm...");
-                        algorithm.Run(parameters);
-                        status = RunnerStatus.Idle;
-                        workerPool.FinishComputation(Id, true);
+                        var result = algorithm.Run(parameters);
+                        workerPool.FinishComputation(Id, true, result);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Error in thread running algorithm: " + ex.Message);
                         workerPool.FinishComputation(Id, false);
+                    }
+                    finally
+                    {
+                        status = RunnerStatus.Idle;
                     }
                 }).Start();
         }

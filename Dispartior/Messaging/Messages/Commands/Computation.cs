@@ -13,7 +13,7 @@ namespace Dispartior.Messaging.Messages.Commands
 
         public string Algorithm { get; set; }
 
-        public IDataSourceConfiguration DataSourceConfiguration { get; set; }
+        public IDataSetDefinition DataSetDefinition { get; set; }
 
         public int PartitionSize { get; set; }
     }

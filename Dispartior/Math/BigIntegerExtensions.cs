@@ -7,6 +7,11 @@ namespace Dispartior.Math
     {
         public static BigInteger Sqrt(this BigInteger number)
         {
+            if (number < BigInteger.Zero)
+            {
+                throw new ArgumentOutOfRangeException("Less than 0.");
+            }
+
             var one = BigInteger.One;
 
             var bytes = number.ToByteArray().GetLength(0);
@@ -29,6 +34,7 @@ namespace Dispartior.Math
                 }
                 nextBit--;
             }
+
             return result;
         }
             

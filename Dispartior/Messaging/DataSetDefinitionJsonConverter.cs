@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using Dispartior.Data;
 using Newtonsoft.Json.Linq;
-using Dispartior.Data.Range;
-using Dispartior.Data.Database;
 
 namespace Dispartior.Messaging
 {
@@ -24,17 +22,35 @@ namespace Dispartior.Messaging
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var target = serializer.Deserialize<JObject>(reader);
-            objectType = DetermineConcreteType(target);
-            var result = Activator.CreateInstance(objectType);
-            serializer.Populate(target.CreateReader(), result);
+            var result = ConstructConcreteType(target);
+            if (result != null)
+            {
+                serializer.Populate(target.CreateReader(), result);
+            }
+
             return result;
         }
 
-        private Type DetermineConcreteType(JObject target)
+        private object ConstructConcreteType(JObject target)
         {
-            // TODO fix this...
-//			var typeName = target.GetValue("TypeName");
-            return typeof(RangeDataSetDefinition);
+            // TODO make this better
+            try
+            {
+                var typeName = target.GetValue("TypeName").ToString();
+                foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    var instance =asm.CreateInstance(typeName);
+                    if (instance != null)
+                    {
+                        return instance;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error creating DataSetDefinition: {0}", ex.Message);
+            }
+            return null;
         }
     }
 }

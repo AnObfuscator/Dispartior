@@ -4,8 +4,16 @@ namespace Dispartior.Data.Database
 {
     public partial class DatabaseDataSetDefinition : IDataSetDefinition
     {
-        public string TypeName { get; set; }
+        private static readonly string typeName = typeof(DatabaseDataSetDefinition).FullName;
 
+        public string TypeName
+        { 
+            get
+            {
+                return typeName;
+            }
+            set { } 
+        }
         public BigInteger PartitionSize
         {
             get;

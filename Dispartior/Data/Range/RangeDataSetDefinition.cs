@@ -5,7 +5,7 @@ namespace Dispartior.Data.Range
 {
     public class RangeDataSetDefinition : IDataSetDefinition
     {
-        private static readonly string typeName = typeof(RangeDataSetDefinition).Name;
+        private static readonly string typeName = typeof(RangeDataSetDefinition).FullName;
 
         public string TypeName
         { 

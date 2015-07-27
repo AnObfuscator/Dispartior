@@ -35,7 +35,7 @@ namespace Dispartior.Data
             }
             else
             {
-                throw new Exception("Cannot find DataSourceDriver with name "+driverName);
+                throw new Exception("Cannot find DataSourceDriver with name: {0}", driverName);
             }
 
             driver = (IDataSourceDriver)Activator.CreateInstance(driverType);
@@ -79,12 +79,12 @@ namespace Dispartior.Data
                 return (IDataPartitioner)Activator.CreateInstance(partitionerType);
             }
 
-            if (typeof(RangeDataSetDefinition).Name.Equals(typeName))
+            if (typeof(RangeDataSetDefinition).FullName.Equals(typeName))
             {
                 return new RangePartitioner();
             }
 
-            if (typeof(DatabaseDataSetDefinition).Name.Equals(typeName))
+            if (typeof(DatabaseDataSetDefinition).FullName.Equals(typeName))
             {
                 var databaseConfiguration = dataSetDefinition as DatabaseDataSetDefinition;
                 return new DatabasePartitioner(databaseConfiguration);

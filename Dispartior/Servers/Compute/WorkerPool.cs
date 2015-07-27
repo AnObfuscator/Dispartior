@@ -43,14 +43,14 @@ namespace Dispartior.Servers.Compute
 
         public void AssignToWorker(IAlgorithm algorithm, IDictionary<string, string> parameters, string workerId)
         {
-            Console.WriteLine(string.Format("Running algo {0} on worker {1}", algorithm, workerId));
+            Console.WriteLine("Running algo {0} on worker {1}", algorithm, workerId);
             try
             {
                 workers[workerId].Run(algorithm, parameters);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(string.Format("Error running algo {0} on worker {1}: {2}", algorithm, workerId, ex.Message));
+                Console.WriteLine("Error running algo {0} on worker {1}: {2}", algorithm, workerId, ex.Message);
                 FinishComputation(workerId, false);
             }
         }
@@ -58,7 +58,8 @@ namespace Dispartior.Servers.Compute
         public void FinishComputation(string workerId, bool success, IDataSetDefinition resultSetDefinition = null)
         {
             var status = success ? ResultStatus.Success : ResultStatus.Failure;
-            var result = new ComputationResult{ UUID = nodeId, WorkerId = workerId, Status = status, ResultSetDefinition = resultSetDefinition }; 
+            var result = new ComputationResult { UUID = nodeId, WorkerId = workerId, Status = status, ResultSetDefinition = resultSetDefinition }; 
+            Console.WriteLine("Finishing Computation: {0}", workerId);
             mediator.SendComputationResult(result);
         }
 

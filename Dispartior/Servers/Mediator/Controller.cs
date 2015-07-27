@@ -36,7 +36,6 @@ namespace Dispartior.Servers.Mediator
         {
             lock (controllerLock)
             {
-                Console.WriteLine("Computation: " + computation.Serialize());
                 currentComputation = computation;
                 var dataSourceConfig = computation.DataSetDefinition;
                 var partitioner = dataSource.GetDataPartitioner(dataSourceConfig);
@@ -50,7 +49,7 @@ namespace Dispartior.Servers.Mediator
                     todo.Enqueue(computationPartition);
                 }
                 computationInProgress = true;
-                Console.WriteLine("Computation started.");
+                Console.WriteLine("Computation started with {0} tasks.", todo.Count);
             }
         }
 
@@ -65,13 +64,13 @@ namespace Dispartior.Servers.Mediator
 
                 Console.WriteLine("Updating Computations...");
 
-                Console.WriteLine("Available Tasks: " + todo.Count);
+                Console.WriteLine("Available Tasks: {0}", todo.Count);
                 var availableWorkers = new List<WorkerAdapter>();
                 foreach (var cc in computeNodes)
                 {
                     availableWorkers.AddRange(cc.AvailableWorkers);
                 }
-                Console.WriteLine("Avaliable workers: " + availableWorkers.Count);
+                Console.WriteLine("Avaliable workers: {0}", availableWorkers.Count);
                 foreach (var worker in availableWorkers)
                 {
                     if (todo.IsEmpty())
@@ -79,7 +78,7 @@ namespace Dispartior.Servers.Mediator
                         Console.WriteLine("No more tasks.");
                         break;
                     }
-
+                    Console.WriteLine("Assigning next task to: {0}@{1}", worker.Id, worker.Connector.Name);
                     AsignNextTaskTo(worker);
                 }
 
@@ -93,12 +92,11 @@ namespace Dispartior.Servers.Mediator
             try
             {
                 worker.StartComputation(computation);
-                Console.WriteLine("Performaing computation: " + computation.Serialize());
             }
             catch (Exception ex)
             {
                 todo.Enqueue(computation);
-                Console.WriteLine(string.Format("Could not perform calculation on {0}:{1} -- {2}", worker.Connector.Name, worker.Id, computation));  
+                Console.WriteLine("Could not perform calculation on {0}@{1} -- {2}", worker.Id, worker.Connector.Name, ex.Message);  
             }
         }
 
@@ -118,6 +116,7 @@ namespace Dispartior.Servers.Mediator
         {
             lock (controllerLock)
             {
+                Console.WriteLine("Got update from {0}@{1} ", result.WorkerId, result.UUID);
                 var worker = computeNodes.Find(cn => cn.UUID == result.UUID).Workers.Find(w => w.Id == result.WorkerId);
                 var computation = worker.FinishComputation();
                 if (result.Status == ResultStatus.Failure)
@@ -143,7 +142,7 @@ namespace Dispartior.Servers.Mediator
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Heartbeat Error for " + connector.Name + ": " + ex.Message);
+                        Console.WriteLine("Heartbeat Error for {0}: {1}", connector.Name, ex.Message);
                     }
                 }
                 return statusUpdates;

@@ -19,14 +19,13 @@ namespace Dispartior.Servers.Mediator
             {
                 try
                 {
-                    Console.WriteLine("Deserializing computation...");
-                    var computation = DeserializeBody<Computation>();
                     Console.WriteLine("Starting computation...");
+                    var computation = DeserializeBody<Computation>();
                     controller.StartComputation(computation);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error starting computation: " + ex.Message);	
+                    Console.WriteLine("Error starting computation: {0}", ex.Message);	
                 }
 
                 return HttpStatusCode.OK;
@@ -35,8 +34,17 @@ namespace Dispartior.Servers.Mediator
             Post["/computationResult"] = _ =>
             {
                 Console.WriteLine("Updating with result...");
-                var result = DeserializeBody<ComputationResult>();
-                controller.UpdateComputation(result);
+                try
+                {
+                    var result = DeserializeBody<ComputationResult>();
+                    Console.WriteLine("Result: {0}", result);
+                    controller.UpdateComputation(result);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error updating result: {0}", ex.Message);
+                }
+
                 return HttpStatusCode.OK;
             };
 

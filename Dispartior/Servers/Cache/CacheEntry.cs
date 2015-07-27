@@ -21,7 +21,7 @@ namespace Dispartior.Servers.Cache
         public void Add(string data)
         {
             var newItem = new Item { Data = data };
-            entryLock.EnterReadLock();
+            entryLock.EnterWriteLock();
             try
             {
                 items.Add(newItem);
